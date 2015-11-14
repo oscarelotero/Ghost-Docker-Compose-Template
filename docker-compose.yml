@@ -1,0 +1,26 @@
+blogData:
+  image: busybox
+  command: "true"
+  volumes:
+    - ./mysqlData:/var/lib/mysql
+    - ./ghostData:/var/lib/ghost
+
+dbBlog:
+  image: mariadb
+  ports:
+    - 3306:3306
+  volumes_from:
+    - blogData
+  env_file:
+    - ./config.env
+
+ghostblog:
+  image: ghost
+  volumes_from:
+    - blogData
+  links:
+    - dbBlog
+  env_file:
+    - config.env
+  ports:
+    - 2368:2368
