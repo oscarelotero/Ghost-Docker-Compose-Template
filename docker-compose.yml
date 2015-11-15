@@ -7,8 +7,7 @@ blogData:
 
 dbBlog:
   image: mariadb
-  ports:
-    - 3306:3306
+  restart: always
   volumes_from:
     - blogData
   env_file:
@@ -16,6 +15,7 @@ dbBlog:
 
 ghostblog:
   image: ghost
+  restart: always
   volumes_from:
     - blogData
   links:
